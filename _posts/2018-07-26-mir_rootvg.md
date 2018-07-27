@@ -3,10 +3,7 @@ layout: post
 title: Mirror / unmirror Rootvg Aix
 ---
 
-Il arrive des cas ou un swap de disque sur le rootvg d'un Aix est nécessaire. Par exemple le rootvg sur hdisk1 vers un hdisk0
-La manip consiste à mirrorer sur un nouveau disque et demirrorer l'ancien
-
-Ici le rootvg est sur hdisk1 on veux qu'il soir unique sur hdisk0:
+Manipulation pour swapper deux disque sur un rootvg
 
 {% highlight bash %}
 aix:root /> lspv  
@@ -94,8 +91,6 @@ hdisk0:
 LV NAME               LPs     PPs     DISTRIBUTION          MOUNT POINT
 hd11admin             1       1       00..00..00..01..00    /admin
 livedump              1       1       01..00..00..00..00    /var/adm/ras/livedump
-fslv00                2       2       02..00..00..00..00    /syst
-fslv01                20      20      20..00..00..00..00    /mano
 lv_dump               16      16      00..00..00..16..00    N/A
 hd10opt               6       6       06..00..00..00..00    /opt
 loglv00               1       1       01..00..00..00..00    N/A
