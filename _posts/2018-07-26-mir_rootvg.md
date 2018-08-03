@@ -3,7 +3,7 @@ layout: post
 title: Mirror / unmirror Rootvg Aix
 ---
 
-Manipulation pour swapper deux disque sur un rootvg
+Manipulation pour swapper deux disques sur un rootvg
 
 {% highlight bash %}
 aix:root /> lspv  
