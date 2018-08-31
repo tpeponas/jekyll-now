@@ -3,15 +3,12 @@ layout: post
 title: Mirror / unmirror Rootvg Aix
 ---
 
-Manipulation pour swapper deux disques sur un rootvg
-
 {% highlight bash %}
 aix:root /> lspv  
 hdisk0          none                                None                        
 hdisk1          00002f8bd1e92b12                    rootvg          active      
 {% endhighlight %}
 
-On étend le VG avec l'hdisk0:
 
 {% highlight bash %}
 aix:root /> extendvg rootvg hdisk0
@@ -21,7 +18,6 @@ hdisk0          00002f8bd6dea7e0                    rootvg          active
 hdisk1          00002f8bd1e92b12                    rootvg          active      
 {% endhighlight %}
 
-On lance le mirroring an tache de fond:
 {% highlight bash %}
 aix:root /> mirrorvg -S rootvg hdisk0 
 0516-1804 chvg: The quorum change takes effect immediately.
@@ -47,9 +43,6 @@ livedump            jfs2       1       2       2    open/stale    /var/adm/ras/l
 lv_dump             sysdump    16      16      1    open/syncd    N/A  
 {% endhighlight %}
 
-L'etat stale indique que le LV correspondant n'est pas encore mirroré.
-Une fois tous les LV a l'état sync:
-
 {% highlight bash %}
 aix:root /> lsvg -l rootvg
 rootvg:
@@ -69,8 +62,7 @@ hd11admin           jfs2       1       2       2    open/syncd    /admin
 livedump            jfs2       1       2       2    open/syncd    /var/adm/ras/livedump
 lv_dump             sysdump    16      16      1    open/syncd    N/A
 {% endhighlight %}
-
-Si on compare le mapping des deux disques on observe une différence: 
+ 
 {% highlight bash %}
 aix:root /> lsvg -p rootvg
 rootvg:
@@ -79,12 +71,10 @@ hdisk1            active            199         68          08..00..00..20..40
 hdisk0            active            199         84          08..00..00..36..40
 {% endhighlight %}
 
-Ici c'est le LV lv_dump qui n'est présent que sur hdisk1, pour pouvoir supprimer l'hdisk1 il faut le déplacer.
 {% highlight bash %}
 aix:root /> migratepv -l lv_dump hdisk1 hdisk0 
 {% endhighlight %}
 
-il est bien maintenant dus hdisk0:
 {% highlight bash %}
 aix:root /> lspv -l hdisk0
 hdisk0:
@@ -105,7 +95,6 @@ paging00              28      28      00..00..28..00..00    N/A
 hd8                   1       1       00..00..01..00..00    N/A
 {% endhighlight %}
 
-On peux donc casser le mirror et suprimer l'hdisk1 du rootvg 
 
 {% highlight bash %}
 aix:root /> unmirrorvg rootvg hdisk1
@@ -123,8 +112,6 @@ hdisk0          00002f8bd6dea7e0                    rootvg          active
 hdisk1          00002f8bd1e92b12                    None                        
 {% endhighlight %}
 
-comme indiqué dans le message , on doit refaire la bootlist et le bosboot sur l'hdisk0:
-
 {% highlight bash %}
 aix:root /> bosboot -ad /dev/hdisk0 
 bosboot: Boot image is 53276 512 byte blocks.
@@ -136,7 +123,6 @@ hdisk0 blv=hd5 pathid=2
 hdisk0 blv=hd5 pathid=3
 {% endhighlight %}
 
-Tous est ok on supprime l'hdisk1 de la base ODM.
 
 {% highlight bash %}
 aix:root /> rmdev -dl hdisk1
