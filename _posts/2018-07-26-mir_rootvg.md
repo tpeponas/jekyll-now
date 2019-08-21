@@ -106,7 +106,7 @@ aix:root /> unmirrorvg rootvg hdisk1
 0516-1144 unmirrorvg: rootvg successfully unmirrored, user should perform
         bosboot of system to reinitialize boot records.  Then, user must modify
         bootlist to just include:  hdisk0.
-        iaxdbdmz01:root /orage/param> reducevg rootvg hdisk1
+aix:root /orage/param> reducevg rootvg hdisk1
 aix:root /> lspv
 hdisk0          00002f8bd6dea7e0                    rootvg          active      
 hdisk1          00002f8bd1e92b12                    None                        
